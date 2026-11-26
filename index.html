@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eef7ff">
+  <meta name="description" content="Up Mr.Peng 脑力训练游戏：数字快闪、数字黑猩猩、舒尔特方格与色词突围。">
+  <title>Up Mr.Peng · 脑力训练游戏</title>
+  <style>
+    :root {
+      --canvas: #eef7ff;
+      --paper: #fffefa;
+      --ink: #18324e;
+      --muted: #687d94;
+      --line: #cfe2f3;
+      --blue: #397bd2;
+      --blue-deep: #245aa0;
+      --yellow: #ffe58a;
+      --coral: #e36e4d;
+      --shadow: 0 22px 60px rgba(42, 89, 140, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%, #fff 0, transparent 27rem),
+        radial-gradient(circle at 92% 16%, rgba(255, 229, 138, 0.45), transparent 24rem),
+        radial-gradient(circle at 1px 1px, rgba(57, 123, 210, 0.09) 1px, transparent 0) 0 0 / 24px 24px,
+        var(--canvas);
+    }
+    .page {
+      width: min(1040px, calc(100% - 28px));
+      margin: auto;
+      padding: 44px 0 60px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+    }
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: #fff;
+      background: linear-gradient(145deg, #5ba7e8, #397bd2 58%, #245aa0);
+      box-shadow: 0 9px 20px rgba(57, 123, 210, 0.24);
+      font-family: Georgia, serif;
+    }
+    .status {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.72);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .hero {
+      margin: 70px auto 38px;
+      max-width: 760px;
+      text-align: center;
+    }
+    .eyebrow {
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+    h1 {
+      margin: 10px 0 13px;
+      color: var(--blue-deep);
+      font-family: "SimSun", serif;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 1.08;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .game {
+      position: relative;
+      min-height: 270px;
+      padding: 25px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      transition: transform .18s, border-color .18s;
+    }
+    .game:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue);
+    }
+    .game::after {
+      content: "";
+      position: absolute;
+      right: -55px;
+      bottom: -65px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: var(--yellow);
+      opacity: .55;
+    }
+    .game.chimp::after { background: #cfe8dc; }
+    .game.schulte::after { background: #d9eadf; }
+    .game.stroop::after { background: #f7d5cc; }
+    .number {
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+    .game h2 {
+      margin: 11px 0 10px;
+      color: var(--blue-deep);
+      font-family: "SimSun", serif;
+      font-size: 31px;
+    }
+    .game p {
+      max-width: 82%;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .play {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      margin-top: 28px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    footer {
+      margin-top: 34px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    @media (max-width: 700px) {
+      .page { padding-top: 22px; }
+      .hero { margin: 40px auto 28px; }
+      .games { grid-template-columns: 1fr; }
+      .game { min-height: 235px; }
+      .game p { max-width: 92%; }
+      .status { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="brand">
+        <span class="mark">Up</span>
+        <span>Mr.Peng · 脑力训练</span>
+      </div>
+      <span class="status">四个游戏 · 独立运行</span>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">BRAIN TRAINING GAMES</div>
+      <h1>选择今天的脑力挑战</h1>
+      <p>每个游戏都是独立的单文件网页，可离线运行，也可直接从 GitHub Pages 打开。</p>
+    </section>
+
+    <section class="games">
+      <a class="game flash" href="flash-memory.html">
+        <span class="number">GAME 01 · 瞬间记忆</span>
+        <h2>数字快闪</h2>
+        <p>记住一瞬间出现的数字与花色，在计算器键盘上完整输入。支持倒计时与街机模式。</p>
+        <span class="play">开始挑战</span>
+      </a>
+
+      <a class="game chimp" href="chimp-memory.html">
+        <span class="number">GAME 02 · 位置记忆</span>
+        <h2>数字黑猩猩</h2>
+        <p>观察数字在方格中的位置，隐藏后按从小到大顺序点击。三种难度、三次机会。</p>
+        <span class="play">开始挑战</span>
+      </a>
+
+      <a class="game schulte" href="schulte-grid.html">
+        <span class="number">GAME 03 · 视觉搜索</span>
+        <h2>舒尔特方格</h2>
+        <p>从 1 开始按顺序找到所有数字，训练阅读扫视、视觉注意力和快速定位能力。</p>
+        <span class="play">开始挑战</span>
+      </a>
+
+      <a class="game stroop" href="stroop-challenge.html">
+        <span class="number">GAME 04 · 专注控制</span>
+        <h2>色词突围</h2>
+        <p>忽略文字含义，只选择文字实际显示的颜色。训练抗干扰、专注力与反应速度。</p>
+        <span class="play">开始挑战</span>
+      </a>
+    </section>
+
+    <footer>Up Mr.Peng · 脑力训练 &nbsp;|&nbsp; Sound © Mr.Peng</footer>
+  </main>
+</body>
+</html>
